@@ -135,3 +135,80 @@ public class baseball {
         return false;
     }
 }
+
+
+// 재익
+
+import java.util.*;
+
+public class NumberBaseball {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        Random random = new Random();
+
+        System.out.println("컴퓨터가 숫자를 생성하였습니다. 답을 맞춰보세요!");
+
+        int[] num = new int[3];
+        int[] input = new int[3];
+        int S = 0;
+        int B = 0;
+
+        for(int i=0; i<num.length; i++) {
+            num[i] =(int)(Math.random()*9 + 1); //Math.random() : 0~1 난수를 생성
+            for(int j=0; j<i; j++) {
+                if(num[j]==num[i]) {
+                    i--;
+                    break;
+                }
+            }
+        }
+        // 랜덤 수 확인
+        for(int item : num) {
+            System.out.print(item + " ");
+        }
+
+        System.out.println();
+
+        int a = 1;
+        while(S<3) {
+            S = 0;
+            B = 0;
+            System.out.println(a + "번째 시도 : ");
+
+            int number = sc.nextInt(); // 123
+            input[0] = number / 100; // 1
+            input[1] = (number % 100)/10; // 2
+            input[2] = number % 10; // 3
+
+
+            for(int i=0; i<num.length; i++) {
+                if(num[i]==input[i]) {
+                    S++;
+                } else if (contains(num, input[i])) {
+                    B++;
+                }
+            }
+            if(S==3) {
+                System.out.println("3S");
+            } else {
+                a++;
+                if(B==3) {
+                    System.out.println("3B");
+                } else {
+                    System.out.println(B + "B" + S + "S");
+                }
+            }
+        }
+        System.out.println(a + "번만에 맞히셨습니다.");
+        System.out.println("게임을 종료합니다.");
+        }
+        // 컨테인 함수 생성
+        public static boolean contains(int[] array, int value) {
+        for (int num : array) {
+            if (num==value) {
+            return true;
+            }
+        }
+        return false;
+    }
+    }
