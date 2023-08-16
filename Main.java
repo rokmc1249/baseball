@@ -1,3 +1,4 @@
+// 정환님
 package week2.baseballGame;
 
 import java.util.*;
@@ -69,5 +70,68 @@ public class Main {
         }
         System.out.println(n-1+"번만에 맞히셨습니다.");
         System.out.println("게임을 종료합니다.");
+    }
+}
+
+// 우응
+package Q;
+
+import java.util.Scanner; //입력받기 위한 라이브러리
+import java.util.Random;
+
+public class baseball {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in); // 사용자 입력 받기
+        Random random = new Random(); // 랜덤으로 숫자 생성하기
+        int [] targetNumbers = new int[3]; // 3자리의 배열생성
+        for (int i = 0; i < 3; i++) {
+            targetNumbers[i] = random.nextInt(10);
+            for (int j = 0; j < i; j++) {
+                if (targetNumbers[i] == targetNumbers[j]) {
+                    i--;
+                    break;
+                }
+            }
+        }
+
+        System.out.println("야구 게임을 시작합니다!");
+        int attempts = 0; // 게임 시도 횟수 세기
+        while (true) { //게임 루프
+            System.out.print("세 개의 숫자를 입력하세요 (1부터 9까지, 공백으로 구분): "); // 게임시작 설명해주기
+            int[] userGuess = new int[3]; // 사용자가 배열 3개를 추측
+            String num = scanner.nextLine(); //123
+            for (int i = 0; i < 3; i++) { // 3자리 배열의 조건걸기
+                int a = num.charAt(i) - '0';   // '1'=>49  '0'=>48
+                userGuess[i] =  a;
+            }
+            int strikes = 0; // 스트라이크 개수 초기화
+            int balls = 0; // 볼 개수 초기화
+            for (int i = 0; i < 3; i++) {
+                if (userGuess[i] == targetNumbers[i]) {
+                    strikes++; // 같은 위치에 같은 숫자가 있으면 스트라이크 증가
+                } else if (contains(targetNumbers, userGuess[i])) {
+                    balls++; // 다른 위치에 같은 숫자가 있으면 볼 증가
+                }
+            }
+            System.out.println("결과: " + strikes + " 스트라이크, " + balls + " 볼");
+            if (strikes == 3) {
+                System.out.println("축하합니다! 정답을 맞추셨습니다!");
+                break;
+            }
+            attempts++;
+        }
+
+        System.out.println("게임 종료. 총 " + attempts + "번 시도하셨습니다.");
+        scanner.close();
+    }
+
+    public static boolean contains(int[] array, int value) {
+        for(int i = 0; i<array.length;i++){
+            if(array[i]==value){
+                return true;
+            }
+
+        }
+        return false;
     }
 }
